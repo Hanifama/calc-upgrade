@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Upgrade</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">        
+        <form class="calc" name="calc">
+            <input type="text" class="value" readonly name="txt">
+            <span class="num clear" onclick="clearDisplay()">C</span>
+            <span class="num" onclick="handleClick('/')">/</span>
+            <span class="num" onclick="handleClick('*')">*</span>
+            <span class="num" onclick="handleClick('7')">7</span>
+            <span class="num" onclick="handleClick('8')">8</span>
+            <span class="num" onclick="handleClick('9')">9</span>
+            <span class="num" onclick="handleClick('-')">-</span>
+            <span class="num" onclick="handleClick('4')">4</span>
+            <span class="num" onclick="handleClick('5')">5</span>
+            <span class="num" onclick="handleClick('6')">6</span>
+            <span class="num plus" onclick="handleClick('+')">+</span>
+            <span class="num" onclick="handleClick('1')">1</span>
+            <span class="num" onclick="handleClick('2')">2</span>
+            <span class="num" onclick="handleClick('3')">3</span>
+            <span class="num" onclick="handleClick('0')">0</span>
+            <span class="num" onclick="handleClick('00')">00</span>
+            <span class="num" onclick="handleClick('%')">%</span>
+            <span class="num" onclick="handleClick('.')">.</span>
+
+            <span class="num intro" onclick="showIntro()">Hello!</span>
+            <span class="num equals" onclick="calculate()"><i>=</i></span>
+        </form>
+    </div>
+
+    <script>
+        // Variabel untuk menyimpan ekspresi
+        let currentExpression = "";
+
+        // Mengganti nilai di input
+        function updateDisplay() {
+            calc.txt.value = currentExpression;
+        }
+
+        // Menangani klik tombol operasi dan angka
+        function handleClick(value) {
+            currentExpression += value;
+            updateDisplay();
+        }
+
+        // Membersihkan tampilan
+        function clearDisplay() {
+            currentExpression = "";
+            updateDisplay();
+        }
+
+        function handleClick(value) {
+            // Jika tombol yang diklik adalah operasi modulus (%)
+            if (value === '%') {
+                // Cek apakah ekspresi saat ini adalah angka yang valid
+                if (/^\d+$/.test(currentExpression)) {
+                    currentExpression += value;
+                    updateDisplay();
+                } else {
+                    alert("Operasi modulus hanya dapat diterapkan pada angka.");
+                }
+            } else {
+                // Jika tombol yang diklik bukan operasi modulus, tambahkan seperti biasa
+                currentExpression += value;
+                updateDisplay();
+            }
+        }
+
+        function showIntro() {
+            var userName = prompt("Masukkan nama kamu disini:");
+            if (userName) {
+                alert("Halo " + userName + " aku siap bantu" + ", salam kenal!" + " Selamat Mencoba <>");
+            } else {
+                alert("Anda tidak memasukkan nama kamu. Salam kenal!");
+            }
+        }
+
+        // Menghitung ekspresi
+        function calculate() {
+            try {
+                currentExpression = eval(currentExpression);
+                updateDisplay();
+            } catch (error) {
+                currentExpression = "Error";
+                updateDisplay();
+            }
+        }
+    </script>
+</body>
+</html>
+
+
